@@ -55,10 +55,10 @@ namespace API.Controllers
             if(user == null ) return Unauthorized("Username Empty");
             using var hmac = new HMACSHA512(user.PasswordSalt);
             
-            var ComputeHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+            var ComputeHashed = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
 
-            for(int i=0;i<ComputeHash.Length;i++){
-                if(ComputeHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid Password");
+            for(int i=0;i<ComputeHashed.Length;i++){
+                if(ComputeHashed[i] != user.PasswordHash[i]) return Unauthorized("Invalid Password");
             }
             //return user;
             return new TodoDto{
